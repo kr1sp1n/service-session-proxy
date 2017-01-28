@@ -1,5 +1,7 @@
 # service-session-proxy
 
+[![CircleCI](https://img.shields.io/circleci/project/github/kr1sp1n/service-session-proxy.svg)](https://circleci.com/gh/kr1sp1n/service-session-proxy)
+
 Generate session with `endpoint` and `expire` date to proxy any request to the `endpoint` URL.
 
 ## API
