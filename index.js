@@ -1,4 +1,4 @@
-const config = require('./config')();
-const proxy = require('./proxy')(config);
+const config = require('./config')()
+const proxy = require('./proxy')(config)
 
-proxy.start();
+proxy.start()
