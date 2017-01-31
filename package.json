@@ -1,9 +1,11 @@
 {
   "name": "service-session-proxy",
   "version": "0.0.1",
+  "main": "index.js",
   "scripts": {
     "deps": "dependency-check . && dependency-check . --extra --no-dev",
-    "test": "standard && npm run deps && nyc tap ./test/*.js"
+    "test": "standard && npm run deps && nyc tap ./test/*.js",
+    "start": "node index.js"
   },
   "dependencies": {},
   "devDependencies": {
