@@ -1,24 +1,37 @@
 const http = require('http')
+const merry = require('merry')
+
+const notFound = merry.notFound
+const error = merry.error
 
 module.exports = (config) => {
   const { port, host } = config
+  const app = merry()
 
-  const handleRequest = (req, res) => {
-    console.log(`${req.method} ${req.url}`)
-    if (req.url.match(/^\/session$/)) {
-      if (req.method === "POST") {
-        console.log('MFMFMFM')
+  app.router([
+    [ '/', (req, res, ctx, done) => {
+      done(null, 'hello world')
+    }],
+    [ '/error', (req, res, ctx, done) => {
+      done(error({ statusCode: 500, message: 'server error!' }))
+    }],
+    ['/api', {
+      get: (req, res, ctx, done) => {
+        done(null, 'hello very explicit GET')
       }
-    }
-    res.end()
-  }
+    }],
+    [ '/404', notFound() ]
+  ])
 
-  const proxy = http.createServer(handleRequest)
+  const proxy = http.createServer(app.start())
 
   proxy.start = () => {
-    proxy.listen(port, host)
+    app.log.info(config)
+    proxy.listen(port, host, () => {
+      app.log.info(`proxy listening on ${host}:${port}`)
+    })
   }
 
-  return proxy 
+  return proxy
 }
 
